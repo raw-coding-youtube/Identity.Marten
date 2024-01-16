@@ -1,4 +1,5 @@
 using Marten;
+using Marten.Linq.MatchesSql;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -98,7 +99,7 @@ public class MartenUserStore<TUser, TKey> : IUserStore<TUser>
         if (typeof(TKey) == typeof(string))
         {
             return await _documentSession.Query<TUser>()
-                .FirstOrDefaultAsync(x => x.Id.Equals(userId), token: cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id.MatchesSql("data ->> 'Id' = ?", userId), token: cancellationToken);
         }
 
         if (typeof(TKey) == typeof(Guid))
@@ -109,7 +110,7 @@ public class MartenUserStore<TUser, TKey> : IUserStore<TUser>
             }
 
             return await _documentSession.Query<TUser>()
-                .FirstOrDefaultAsync(x => x.Id.Equals(guidId), token: cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id.MatchesSql("data ->> 'Id' = ?", guidId), token: cancellationToken);
         }
 
         if (typeof(TKey) == typeof(int))
@@ -120,7 +121,7 @@ public class MartenUserStore<TUser, TKey> : IUserStore<TUser>
             }
 
             return await _documentSession.Query<TUser>()
-                .FirstOrDefaultAsync(x => x.Id.Equals(intId), token: cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id.MatchesSql("data ->> 'Id' = ?", intId), token: cancellationToken);
         }
 
         if (typeof(TKey) == typeof(long))
@@ -131,7 +132,7 @@ public class MartenUserStore<TUser, TKey> : IUserStore<TUser>
             }
 
             return await _documentSession.Query<TUser>()
-                .FirstOrDefaultAsync(x => x.Id.Equals(longId), token: cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id.MatchesSql("data ->> 'Id' = ?", longId), token: cancellationToken);
         }
 
         throw new ArgumentException($"unsupported key type: {typeof(TKey).FullName}");

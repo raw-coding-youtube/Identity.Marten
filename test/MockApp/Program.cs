@@ -25,3 +25,8 @@ app.MapGet("/add-user", async (UserManager<IdentityUser> uMgr) =>
 });
 
 app.Run();
+
+public partial class Program
+{
+    
+} 
