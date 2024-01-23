@@ -7,6 +7,7 @@ jobs:
     name: Publish
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Pack
         run: |
           dotnet pack ./lib/Identity.Marten -c Release -o .output
