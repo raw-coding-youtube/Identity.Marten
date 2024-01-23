@@ -1,19 +1,25 @@
 name: Publish Nuget Package
 
-on: workflow_dispatch
-  
+on:
+  push:
+    tags:
+      - v*.*.**
+     
 jobs:
   publish_nuget_package:
     name: Publish
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Test
+        run: |
+          echo "${{ github.ref_name }}"
       - name: Pack
         run: |
           dotnet pack ./lib/Identity.Marten -c Release -o .output
-      - name: Publish
-        env:
-          API_KEY: ${{ secrets.NUGET_API_KEY }}
-        run: |
-          dotnet nuget push .output/*.nupkg --api-key $API_KEY --source https://api.nuget.org/v3/index.json
+#      - name: Publish
+#        env:
+#          API_KEY: ${{ secrets.NUGET_API_KEY }}
+#        run: |
+#          dotnet nuget push .output/*.nupkg --api-key $API_KEY --source https://api.nuget.org/v3/index.json
     
