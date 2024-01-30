@@ -1,10 +1,10 @@
-name: Publish Nuget Package
+name: Build & Test Package
 
 on: pull_request
      
 jobs:
-  publish_nuget_package:
-    name: Publish
+  build_and_test_package:
+    name: Build & Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
