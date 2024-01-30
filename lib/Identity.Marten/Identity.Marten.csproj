@@ -6,7 +6,7 @@
         <Nullable>enable</Nullable>
         
         <PackageId>Identity.Marten</PackageId>
-        <Version>{{Version}}</Version>
+        <Version>0.0.0</Version>
         <Authors>Anton Wieslander</Authors>
         
     </PropertyGroup>

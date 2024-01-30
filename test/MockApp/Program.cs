@@ -11,7 +11,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 
 var app = builder.Build();
 
-app.MapGet("/", (string name, UserManager<IdentityUser> uMgr) => uMgr.FindByNameAsync(name));
+app.MapGet("/user", (string name, UserManager<IdentityUser> uMgr) => uMgr.FindByNameAsync(name));
 
 app.MapGet("/add-user", async (UserManager<IdentityUser> uMgr) =>
 {
@@ -23,6 +23,30 @@ app.MapGet("/add-user", async (UserManager<IdentityUser> uMgr) =>
 
     return Results.Ok(result);
 });
+
+app.MapGet("/role", async (string name, RoleManager<IdentityRole> rMgr) =>
+{
+    var role = await rMgr.FindByNameAsync(name);
+    return Results.Ok(role);
+});
+
+app.MapGet("/add-role", async (string name, RoleManager<IdentityRole> rMgr) =>
+{
+    var result = await rMgr.CreateAsync(new IdentityRole(name));
+    return Results.Ok(result);
+});
+
+// app.MapGet("/set-admin", async (UserManager<IdentityUser> uMgr) =>
+// {
+//     var result = await uMgr.CreateAsync(new IdentityUser()
+//     {
+//         Email = "test@test.com",
+//         UserName = "bob",
+//     });
+//
+//     uMgr.AddToRoleAsync()
+//     return Results.Ok(result);
+// });
 
 app.Run();
 

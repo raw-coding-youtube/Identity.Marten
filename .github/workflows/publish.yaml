@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Set Version
         run: |
-          sed -i -e 's/{{Version}}/${{ github.ref_name }}/' ./lib/Identity.Marten/Identity.Marten.csproj
+          sed -i -e 's/0.0.0/${{ github.ref_name }}/' ./lib/Identity.Marten/Identity.Marten.csproj
       - name: Pack
         run: |
           dotnet pack ./lib/Identity.Marten -c Release -o .output
